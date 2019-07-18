@@ -87,6 +87,10 @@
 #include <wtf/RunLoop.h>
 #include <wtf/text/AtomicString.h>
 
+extern "C" {
+#include <libpvd.h>
+}
+
 #if ENABLE(SEC_ITEM_SHIM)
 #include "SecItemShim.h"
 #endif
@@ -2630,6 +2634,12 @@ void NetworkProcess::removeKeptAliveLoad(NetworkResourceLoader& loader)
 {
     if (auto session = m_networkSessions.get(loader.sessionID()))
         session->removeKeptAliveLoad(loader);
+}
+
+void NetworkProcess::bindToPvd(char *pvd)
+{
+    proc_bind_to_pvd(pvd);
+    return;
 }
 
 void NetworkProcess::webPageWasAdded(IPC::Connection& connection, PAL::SessionID sessionID, PageIdentifier pageID, PageIdentifier oldPageID)

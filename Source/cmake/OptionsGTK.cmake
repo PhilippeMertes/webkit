@@ -39,6 +39,7 @@ find_package(EGL)
 find_package(GTKUnixPrint)
 find_package(OpenGL)
 find_package(OpenGLES2)
+find_package(PvD)
 
 WEBKIT_OPTION_BEGIN()
 
