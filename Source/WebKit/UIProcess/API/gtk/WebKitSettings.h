@@ -499,7 +499,7 @@ WEBKIT_API void
 webkit_settings_set_enable_media                               (WebKitSettings *settings,
                                                                 gboolean        enabled);
 
-WEBKIT_API gboolean
+WEBKIT_API const gchar*
 webkit_settings_get_pvd_binding                                (WebKitSettings *settings);
 
 WEBKIT_API void

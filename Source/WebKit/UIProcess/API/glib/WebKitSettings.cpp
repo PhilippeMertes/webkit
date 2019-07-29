@@ -3739,11 +3739,13 @@ void webkit_settings_set_enable_media(WebKitSettings* settings, gboolean enabled
     g_object_notify(G_OBJECT(settings), "enable-media");
 }
 
-gboolean webkit_settings_get_pvd_binding(WebKitSettings* settings)
+const gchar* webkit_settings_get_pvd_binding(WebKitSettings* settings)
 {
-    g_return_val_if_fail(WEBKIT_IS_SETTINGS(settings), FALSE);
+    g_return_val_if_fail(WEBKIT_IS_SETTINGS(settings), NULL);
 
-    return TRUE;
+    printf("webkit_settings_get_pvd_binding called\n");
+
+    return settings->priv->preferences->provisioningDomainBinding().ascii().data();
 }
 
 
@@ -3751,11 +3753,7 @@ void webkit_settings_set_pvd_binding(WebKitSettings* settings, gchar* pvd)
 {
     g_return_if_fail(WEBKIT_IS_SETTINGS(settings));
 
-    WebKitSettingsPrivate* priv = settings->priv;
-    bool currentValue = priv->preferences->mediaEnabled();
-    if (currentValue)
-        return;
+    printf("webkit_settings_set_pvd_binding called with pvd name: %s\n", pvd);
 
-    priv->preferences->setMediaEnabled(TRUE);
-    g_object_notify(G_OBJECT(settings), "enable-media");
+    settings->priv->preferences->setProvisioningDomainBinding(pvd);
 }

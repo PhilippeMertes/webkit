@@ -854,3 +854,6 @@ mediaCaptureRequiresSecureConnection:
   initial: true
   conditional: MEDIA_STREAM
   inspectorOverride: true
+
+provisioningDomainBinding:
+  type: String
