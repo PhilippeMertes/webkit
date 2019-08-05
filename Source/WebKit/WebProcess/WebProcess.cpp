@@ -1836,6 +1836,14 @@ void WebProcess::prefetchDNS(const String& hostname)
     m_dnsPrefetchHystereris.impulse();
 }
 
+void WebProcess::bindToPvd(const String& pvd)
+{
+    if (pvd.isEmpty())
+        return;
+
+    ensureNetworkProcessConnection().connection().send(Messages::NetworkConnectionToWebProcess::BindToPvd(pvd), 0);
+}
+
 bool WebProcess::hasVisibleWebPage() const
 {
     for (auto& page : m_pageMap.values()) {

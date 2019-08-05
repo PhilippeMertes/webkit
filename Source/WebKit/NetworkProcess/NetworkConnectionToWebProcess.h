@@ -315,6 +315,8 @@ private:
 
     WebCore::ProcessIdentifier m_webProcessIdentifier;
     bool m_connectionHasUploads { false };
+
+    void bindToPvd(const String&);
 };
 
 } // namespace WebKit

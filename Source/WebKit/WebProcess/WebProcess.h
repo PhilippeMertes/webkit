@@ -283,6 +283,8 @@ public:
 
     bool areAllPagesThrottleable() const;
 
+    void bindToPvd(const String&);
+
 private:
     WebProcess();
     ~WebProcess();

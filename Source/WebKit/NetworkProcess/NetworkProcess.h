@@ -343,7 +343,7 @@ public:
     void addKeptAliveLoad(Ref<NetworkResourceLoader>&&);
     void removeKeptAliveLoad(NetworkResourceLoader&);
 
-    void bindToPvd(char *pvd);
+    void bindToPvd(const String&);
 
 private:
     void platformInitializeNetworkProcess(const NetworkProcessCreationParameters&);

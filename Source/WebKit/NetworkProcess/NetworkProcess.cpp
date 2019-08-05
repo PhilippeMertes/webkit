@@ -2636,14 +2636,15 @@ void NetworkProcess::removeKeptAliveLoad(NetworkResourceLoader& loader)
         session->removeKeptAliveLoad(loader);
 }
 
-void NetworkProcess::bindToPvd(char *pvd)
+void NetworkProcess::bindToPvd(const String& pvd)
 {
-    proc_bind_to_pvd(pvd);
-    return;
+    printf("NetworkProces::bindToPvd: %s\n", pvd.utf8().data());
+    proc_bind_to_pvd((char*) pvd.utf8().data());
 }
 
 void NetworkProcess::webPageWasAdded(IPC::Connection& connection, PAL::SessionID sessionID, PageIdentifier pageID, PageIdentifier oldPageID)
 {
+    printf ("webPageWasAdded\n");
     if (!pageID || !oldPageID) {
         LOG_ERROR("Cannot add page with invalid id");
         return;

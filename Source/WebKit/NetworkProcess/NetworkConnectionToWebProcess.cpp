@@ -918,4 +918,9 @@ void NetworkConnectionToWebProcess::webProcessSessionChanged(PAL::SessionID newS
     m_networkProcess->webProcessSessionChanged(m_connection.get(), newSessionID, pages);
 }
 
+void NetworkConnectionToWebProcess::bindToPvd(const String& pvd)
+{
+    m_networkProcess->bindToPvd(pvd);
+}
+
 } // namespace WebKit
