@@ -498,6 +498,8 @@ public:
     bool setFixedLayoutSize(const WebCore::IntSize&);
     WebCore::IntSize fixedLayoutSize() const;
 
+    void setProvisioningDomainBinding(const String& pvd);
+
     void listenForLayoutMilestones(OptionSet<WebCore::LayoutMilestone>);
 
     void setSuppressScrollbarAnimations(bool);

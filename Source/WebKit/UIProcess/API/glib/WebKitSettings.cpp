@@ -77,6 +77,7 @@ struct _WebKitSettingsPrivate {
     CString pictographFontFamily;
     CString defaultCharset;
     CString userAgent;
+    CString provisioningDomain;
     bool allowModalDialogs { false };
     bool zoomTextOnly { false };
     double screenDpi { 96 };
@@ -168,6 +169,7 @@ enum {
 #endif
     PROP_ENABLE_JAVASCRIPT_MARKUP,
     PROP_ENABLE_MEDIA,
+    PROP_PROVISIONING_DOMAIN
 };
 
 static void webKitSettingsDispose(GObject* object)
@@ -397,6 +399,9 @@ static void webKitSettingsSetProperty(GObject* object, guint propId, const GValu
     case PROP_ENABLE_MEDIA:
         webkit_settings_set_enable_media(settings, g_value_get_boolean(value));
         break;
+    case PROP_PROVISIONING_DOMAIN:
+        webkit_settings_set_pvd_binding(settings, g_value_get_string(value));
+        break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, propId, paramSpec);
         break;
@@ -584,6 +589,9 @@ static void webKitSettingsGetProperty(GObject* object, guint propId, GValue* val
         break;
     case PROP_ENABLE_MEDIA:
         g_value_set_boolean(value, webkit_settings_get_enable_media(settings));
+        break;
+    case PROP_PROVISIONING_DOMAIN:
+        g_value_set_string(value, webkit_settings_get_pvd_binding(settings));
         break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, propId, paramSpec);
@@ -1517,6 +1525,14 @@ static void webkit_settings_class_init(WebKitSettingsClass* klass)
             _("Whether media content should be handled"),
             TRUE,
             readWriteConstructParamFlags));
+
+    g_object_class_install_property(gObjectClass,
+                                    PROP_PROVISIONING_DOMAIN,
+                                    g_param_spec_string("provisioning-domain",
+                                                        _("Provisioning Domain FQDN"),
+                                                        _("The Provisioning Domain (PvD) FQDN"),
+                                                        0,
+                                                        readWriteConstructParamFlags));
 
 }
 
@@ -3743,17 +3759,18 @@ const gchar* webkit_settings_get_pvd_binding(WebKitSettings* settings)
 {
     g_return_val_if_fail(WEBKIT_IS_SETTINGS(settings), NULL);
 
-    printf("webkit_settings_get_pvd_binding called\n");
-
-    return settings->priv->preferences->provisioningDomainBinding().ascii().data();
+    return settings->priv->preferences->provisioningDomainBinding().utf8().data();
 }
 
 
-void webkit_settings_set_pvd_binding(WebKitSettings* settings, gchar* pvd)
+void webkit_settings_set_pvd_binding(WebKitSettings* settings, const gchar* pvd)
 {
     g_return_if_fail(WEBKIT_IS_SETTINGS(settings));
 
-    printf("webkit_settings_set_pvd_binding called with pvd name: %s\n", pvd);
+    const gchar* currentPvd = webkit_settings_get_pvd_binding(settings);
+    if (g_strcmp0(currentPvd, pvd) == 0)
+        return;
 
     settings->priv->preferences->setProvisioningDomainBinding(pvd);
+    g_object_notify(G_OBJECT(settings), "provisioning-domain");
 }

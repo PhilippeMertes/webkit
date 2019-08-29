@@ -504,7 +504,7 @@ webkit_settings_get_pvd_binding                                (WebKitSettings *
 
 WEBKIT_API void
 webkit_settings_set_pvd_binding                                (WebKitSettings *settings,
-                                                                gchar          *pvd);
+                                                                const gchar    *pvd);
 
 G_END_DECLS
 

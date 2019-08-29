@@ -1013,6 +1013,7 @@ InspectorWindowFrame:
 ProvisioningDomainBinding:
   type: String
   defaultValue: '""'
+  webcoreName: provisioningDomainBinding
 
 InactiveMediaCaptureSteamRepromptIntervalInMinutes:
   type: double

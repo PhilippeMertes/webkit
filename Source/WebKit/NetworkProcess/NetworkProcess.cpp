@@ -2644,7 +2644,6 @@ void NetworkProcess::bindToPvd(const String& pvd)
 
 void NetworkProcess::webPageWasAdded(IPC::Connection& connection, PAL::SessionID sessionID, PageIdentifier pageID, PageIdentifier oldPageID)
 {
-    printf ("webPageWasAdded\n");
     if (!pageID || !oldPageID) {
         LOG_ERROR("Cannot add page with invalid id");
         return;

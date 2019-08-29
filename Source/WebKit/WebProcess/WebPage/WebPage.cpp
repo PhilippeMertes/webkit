@@ -2083,6 +2083,11 @@ bool WebPage::setFixedLayoutSize(const IntSize& size)
     return true;
 }
 
+void WebPage::setProvisioningDomainBinding(const String& pvd)
+{
+    WebProcess::singleton().bindToPvd(pvd);
+}
+
 IntSize WebPage::fixedLayoutSize() const
 {
     FrameView* view = mainFrameView();
@@ -3541,7 +3546,10 @@ void WebPage::updatePreferences(const WebPreferencesStore& store)
 #endif
 
     DatabaseManager::singleton().setIsAvailable(store.getBoolValueForKey(WebPreferencesKey::databasesEnabledKey()));
-
+    const String pvd = settings.provisioningDomainBinding();
+    printf("updatePreferences\n");
+    if (!pvd.isEmpty())
+        setProvisioningDomainBinding(pvd);
     m_tabToLinks = store.getBoolValueForKey(WebPreferencesKey::tabsToLinksKey());
     m_asynchronousPluginInitializationEnabled = store.getBoolValueForKey(WebPreferencesKey::asynchronousPluginInitializationEnabledKey());
     m_asynchronousPluginInitializationEnabledForAllPlugins = store.getBoolValueForKey(WebPreferencesKey::asynchronousPluginInitializationEnabledForAllPluginsKey());

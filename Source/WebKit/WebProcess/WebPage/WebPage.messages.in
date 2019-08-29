@@ -229,6 +229,8 @@ GenerateSyntheticEditingCommand(enum:uint8_t WebKit::SyntheticEditingCommandType
     SuspendActiveDOMObjectsAndAnimations()
     ResumeActiveDOMObjectsAndAnimations()
 
+    SetProvisioningDomainBinding(String pvd)
+
     Close()
     TryClose()
 
