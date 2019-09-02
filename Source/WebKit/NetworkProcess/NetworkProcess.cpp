@@ -2645,7 +2645,7 @@ void NetworkProcess::bindToPvd(const String& pvd)
     // check if successfully bound
     proc_get_bound_pvd(proc_pvd);
     if (strcmp(proc_pvd, pvd.utf8().data()) == 0)
-        RELEASE_LOG("Process successfully bound to PvD %s", pvd.utf8.data());
+        RELEASE_LOG("Process successfully bound to PvD %s", pvd.utf8().data());
     else {
         if (proc_bind_to_nopvd() < 0)
             RELEASE_LOG_ERROR("Unable to bind to PvD %s as well as unbinding to any.", pvd.utf8().data());
