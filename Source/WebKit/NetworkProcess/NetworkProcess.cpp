@@ -2638,8 +2638,20 @@ void NetworkProcess::removeKeptAliveLoad(NetworkResourceLoader& loader)
 
 void NetworkProcess::bindToPvd(const String& pvd)
 {
-    printf("NetworkProces::bindToPvd: %s\n", pvd.utf8().data());
+    char proc_pvd[PVDNAMSIZ];
+
     proc_bind_to_pvd((char*) pvd.utf8().data());
+
+    // check if successfully bound
+    proc_get_bound_pvd(proc_pvd);
+    if (strcmp(proc_pvd, pvd.utf8().data()) == 0)
+        RELEASE_LOG("Process successfully bound to PvD %s", pvd.utf8.data());
+    else {
+        if (proc_bind_to_nopvd() < 0)
+            RELEASE_LOG_ERROR("Unable to bind to PvD %s as well as unbinding to any.", pvd.utf8().data());
+        else
+            RELEASE_LOG_ERROR("Unable to bind to PvD %s, thus remains unbound to any PvD.", pvd.utf8().data());
+    }
 }
 
 void NetworkProcess::webPageWasAdded(IPC::Connection& connection, PAL::SessionID sessionID, PageIdentifier pageID, PageIdentifier oldPageID)

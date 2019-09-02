@@ -3547,7 +3547,6 @@ void WebPage::updatePreferences(const WebPreferencesStore& store)
 
     DatabaseManager::singleton().setIsAvailable(store.getBoolValueForKey(WebPreferencesKey::databasesEnabledKey()));
     const String pvd = settings.provisioningDomainBinding();
-    printf("updatePreferences\n");
     if (!pvd.isEmpty())
         setProvisioningDomainBinding(pvd);
     m_tabToLinks = store.getBoolValueForKey(WebPreferencesKey::tabsToLinksKey());
